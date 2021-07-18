@@ -1,7 +1,13 @@
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+
 import NewMeetupForm from "./NewMeetupForm/NewMeetupForm";
 
+import FavoritesContext from "../../store/favorites-context";
+
 function NewMeetupPage() {
+  const favContext = useContext(FavoritesContext);
+
   const history = useHistory();
   const url =
     "https://react--meetups-672fc-default-rtdb.europe-west1.firebasedatabase.app";
@@ -14,8 +20,15 @@ function NewMeetupPage() {
       headers: {
         "Content-Type": "Application/json",
       },
-    }).then(() => {
-      history.replace("/");
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      const id = res.name;
+      favContext.addMeetupUpHandler({
+        id,
+        ...newMeetup
+      });
+      history.replace('/');
     });
   }
 

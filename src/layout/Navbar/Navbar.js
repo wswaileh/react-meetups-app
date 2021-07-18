@@ -4,7 +4,9 @@ import classes from "./Navbar.module.css";
 function NavBar(props) {
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>React Meetups</div>
+      <Link to="/">
+        <div className={classes.logo}>React Meetups</div>
+      </Link>
       <nav>
         <ul>
           {props.items.map((item) => (
